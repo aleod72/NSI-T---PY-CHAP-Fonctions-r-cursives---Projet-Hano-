@@ -8,6 +8,7 @@ class Setup:
     def __init__(self, nbdisques):
         self.tk = tk
         self.root = self.tk.Tk()
+        self.root.resizable(False, False)
 
         self.canvas = self.tk.Canvas(self.root, width=800, height=250)
         self.canvas.pack()
@@ -17,7 +18,13 @@ class Setup:
             self.disques[0].append(disques.Setup(taille + 1))
         self.nbdisques = len(self.disques[0])
 
-        self.text = tk.Label(self.root, text=f" {nbdisques} disques... ", background="orangered", foreground="white", font=font.Font(family="Lucida Console", size="14"))
+        self.text = tk.Label(
+            self.root,
+            text=f"                                                            Le jeu de Hanoï avec {nbdisques} disques...                                                            ",
+            background="orangered",
+            foreground="white",
+            font=font.Font(family="Lucida Console", size="14"),
+        )
         self.text.place(relx=0.5, rely=1, y=-13, anchor="center")
         self.root.title(f"Hanoï : {self.nbdisques} disque.s")
 
@@ -114,4 +121,4 @@ class Setup:
                 )
 
         self.root.update()
-        time.sleep(0.5)
+        time.sleep(0.3)
