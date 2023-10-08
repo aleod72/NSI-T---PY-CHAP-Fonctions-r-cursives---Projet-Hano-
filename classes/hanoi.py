@@ -1,18 +1,24 @@
 import tkinter as tk
+from tkinter import font
 import time
 from . import disques
 
 
 class Setup:
     def __init__(self, nbdisques):
-        self.root = tk.Tk()
-        self.canvas = tk.Canvas(self.root, width=800, height=250)
+        self.tk = tk
+        self.root = self.tk.Tk()
+
+        self.canvas = self.tk.Canvas(self.root, width=800, height=250)
         self.canvas.pack()
 
         self.disques = [[], [], []]
         for taille in range(nbdisques):
             self.disques[0].append(disques.Setup(taille + 1))
         self.nbdisques = len(self.disques[0])
+
+        self.text = tk.Label(self.root, text=f" {nbdisques} disques... ", background="orangered", foreground="white", font=font.Font(family="Lucida Console", size="14"))
+        self.text.place(relx=0.5, rely=1, y=-13, anchor="center")
         self.root.title(f"Hanoï : {self.nbdisques} disque.s")
 
     def __str__(self):
@@ -94,7 +100,7 @@ class Setup:
 
         for tour in range(len(self.disques)):
             for disque in range(len(self.disques[tour])):
-                taille = self.disques[tour][-1 - disque].taille
+                taille = self.disques[tour][-1 - disque].taille + 1.5
                 largeur = taille * 20
                 hauteur = 20
                 x = 150 + tour * 250 - taille * 10
