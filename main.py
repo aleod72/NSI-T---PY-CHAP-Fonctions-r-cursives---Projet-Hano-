@@ -1,4 +1,4 @@
-from classes import *
+from classes import hanoi
 
 setup = hanoi.Setup(5)
 setup.jouer()
