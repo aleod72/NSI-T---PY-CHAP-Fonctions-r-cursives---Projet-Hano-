@@ -1,15 +1,15 @@
 import tkinter as tk
 from tkinter import font
+from .disques import *
 import time
-from . import disques
 
 
-class Setup:
+class Hanoi:
     def __init__(self, nbdisques):
 
         self.disques = [[], [], []]
         for taille in range(nbdisques):
-            self.disques[0].append(disques.Setup(taille + 1))
+            self.disques[0].append(Disques(taille + 1))
         self.nbdisques = len(self.disques[0])
 
         self.tk = tk
@@ -113,7 +113,7 @@ class Setup:
     def afficher(self):
         self.buildCanvas()
 
-        time.sleep(0.5)
+        # time.sleep(0.5)
         self.root.update()
     
     def buildCanvas(self):

@@ -1,7 +1,7 @@
 import random
 
 
-class Setup:
+class Disques:
     def __init__(self, taille):
         self.taille = taille
         self.couleur = "#" + "".join(

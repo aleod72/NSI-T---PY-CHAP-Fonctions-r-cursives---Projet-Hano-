@@ -1,6 +1,6 @@
-from classes import hanoi
+from classes.hanoi import *
 
-setup = hanoi.Setup(5)
+setup = Hanoi(7)
 setup.jouer()
 setup.text.config(
     text="                                                            Terminé                                                            ",
