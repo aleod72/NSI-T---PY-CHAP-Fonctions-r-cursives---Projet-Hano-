@@ -1,12 +1,11 @@
 import tkinter as tk
 from tkinter import font
-from .disques import *
+from classes.disques import *
 import time
 
 
 class Hanoi:
     def __init__(self, nbdisques):
-
         self.disques = [[], [], []]
         for taille in range(nbdisques):
             self.disques[0].append(Disques(taille + 1))
@@ -19,13 +18,13 @@ class Hanoi:
         self.canvas.pack()
         self.text = tk.Label(
             self.root,
-            text=f"                                                            Le jeu de Hanoï avec {nbdisques} disques...                                                            ",
+            text="                                                            Les tours de Hanoï avec %s disques...                                                            " % self.nbdisques,
             background="orangered",
             foreground="white",
-            font=font.Font(family="Lucida Console", size="14"),
+            font=font.Font(family="Source Code Pro", size="14"),
         )
-        self.text.place(relx=0.5, rely=1, y=-13, anchor="center")
-        self.root.title(f"Hanoï : {self.nbdisques} disque.s")
+        self.text.place(relx=0.5, rely=1, y=-17, anchor="center")
+        self.root.title("Hanoï : %s disque.s" % self.nbdisques)
         self.buildCanvas()
         self.root.update()
 
@@ -63,14 +62,14 @@ class Hanoi:
             Fonction qui permet de deplacer deux disques si c'est possible
             """
             if bouge(depart, intermediaire) == False:
-                return f"Erreur 1 deplacer2pions() {self.disques[depart][0].taille, self.disques[intermediaire][0].taille}"
+                return "Erreur 1 deplacer2pions() %(departTaille)s %(interTaille)s" % {'departTaille': self.disques[depart][0].taille, 'interTaille': self.disques[intermediaire][0].taille}
             if bouge(depart, arrivee) == False:
                 bouge(intermediaire, depart)
-                return f"Erreur 2 deplacer2pions() {self.disques[intermediaire][0].taille, self.disques[depart][0].taille}"
+                return "Erreur 2 deplacer2pions() %(interTaille)s %(departTaille)s" % {'interTaille': self.disques[intermediaire][0].taille, 'departTaille': self.disques[depart][0].taille}
             if bouge(intermediaire, arrivee) == False:
                 bouge(arrivee, depart)
                 bouge(intermediaire, depart)
-                return f"Erreur 1 deplacer2pions() {self.disques[intermediaire][0].taille, self.disques[arrivee][0].taille}"
+                return "Erreur 1 deplacer2pions() %(interTaille)s %(arriveeTaille)s" % {'interTaille': self.disques[intermediaire][0].taille, 'arriveeTaille': self.disques[arrivee][0].taille}
             return "OK"
 
         def deplaceNpions(n, depart, arrivee, intermediaire):
@@ -80,7 +79,7 @@ class Hanoi:
             if n > self.nbdisques:
                 # n'arrivera jamais sauf démonstration
                 print(
-                    f"Impossible de deplacer {n} disques, puisqu'il y en a {self.nbdisques}"
+                    "Impossible de deplacer %(n)s disques, puisqu'il y en a %(nbdisques)s" %{'n':n, 'nbdisques': self.nbdisques}
                 )
                 return
             if n == 0:
@@ -97,9 +96,11 @@ class Hanoi:
             else:
                 # ben là tout dépend du n
                 # déplace les pions sur la tour intermédiaire (attention au cerveau les prochaines lignes sont dangereuses)
-                # en gros... ça va déplacer les pions sur une tour intermédiaire mais... 1/2 c'est la tour d'arrivée qui sert de tour intermédiaire
+                # en gros... ça va déplacer les pions sur une tour intermédiaire mais... 1/2 c'est la tour d'arrivée
+                # qui sert de tour intermédiaire
                 deplaceNpions(n - 1, depart, intermediaire, arrivee)
-                # bon une fois qu'il ne reste plus que le plus gros dans la première tour on le déplace dans la dernière tour (à ne pas sortir de son contexte)
+                # bon une fois qu'il ne reste plus que le plus gros dans la première tour on le déplace dans la dernière
+                # tour (à ne pas sortir de son contexte)
                 bouge(depart, arrivee)
                 # et là... ça va [bla bla] mais... maintenant 1/2 la tour de départ sert de tour intermédiaire
                 deplaceNpions(n - 1, intermediaire, arrivee, depart)
@@ -113,9 +114,9 @@ class Hanoi:
     def afficher(self):
         self.buildCanvas()
 
-        # time.sleep(0.5)
+        time.sleep(0.1)
         self.root.update()
-    
+
     def buildCanvas(self):
         self.canvas.delete("all")
         self.canvas.create_rectangle(150, 200, 150, 50)
